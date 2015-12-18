@@ -28,7 +28,7 @@ u8 task2count = 0;
 
 void setup()
 {
-	ebox_init();
+	eBoxInit();
 	OS_Init();
 	
 	uart1.begin(9600);

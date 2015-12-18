@@ -28,19 +28,16 @@ u8 task2count = 0;
 
 void setup()
 {
-	ebox_init();
-	OS_Init();
+	eBoxInit();
 	
 	uart1.begin(9600);
 	uart1.printf("\r\nuart1 9600 ok!");
 	
-		uart1.printf("\r\nos初始化!");
-
+	OS_Init();
 	OS_TaskCreate(task_1,&TASK_1_STK[TASK_1_STK_SIZE-1],TASK1_PRIO);
 	OS_TaskCreate(task_2,&TASK_2_STK[TASK_2_STK_SIZE-1],TASK2_PRIO);
 	OS_TaskCreate(task_3,&TASK_3_STK[TASK_3_STK_SIZE-1],TASK3_PRIO);
-			uart1.printf("\r\nos创建任务成功");
-
+	
 	OS_Start();
 
 }
@@ -68,9 +65,9 @@ void task_3()
 	{
 		uart1.printf("Task 3 Running!!!\r\n");
 		cpu = OS_GetCPU();
-		mem = OS_GetStackMaxUsage(TASK_3_STK,TASK_3_STK_SIZE);
+		mem = OS_GetStackMaxUsage(TASK_1_STK,TASK_1_STK_SIZE);
 		uart1.printf("cpu = %0.1f%%\r\n",cpu);
-		uart1.printf("task3：mem = %02d%%\r\n",mem);
+		uart1.printf("mem = %02d%%\r\n",mem);
 		OS_DelayTimes(1000);
 	}
 
@@ -78,7 +75,6 @@ void task_3()
 
 int main(void)
 {
-
 	setup();
 
 	while(1)

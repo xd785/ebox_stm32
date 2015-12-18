@@ -24,11 +24,12 @@ void task_3();
 
 float cpu;
 INT16U mem;
+u8 task1count = 0;
 u8 task2count = 0;
 
 void setup()
 {
-	ebox_init();
+	eBoxInit();
 	OS_Init();
 	
 	uart1.begin(9600);
@@ -39,7 +40,7 @@ void setup()
 	OS_TaskCreate(task_1,&TASK_1_STK[TASK_1_STK_SIZE-1],TASK1_PRIO);
 	OS_TaskCreate(task_2,&TASK_2_STK[TASK_2_STK_SIZE-1],TASK2_PRIO);
 	OS_TaskCreate(task_3,&TASK_3_STK[TASK_3_STK_SIZE-1],TASK3_PRIO);
-			uart1.printf("\r\nos创建任务成功");
+	uart1.printf("\r\nos创建任务成功");
 
 	OS_Start();
 
@@ -48,7 +49,13 @@ void task_1()
 {
 	while(1)
 	{
+		task1count++;
 		uart1.printf("Task 1 Running!!!\r\n");
+		if(task1count % 10 == 0)
+		{
+			uart1.printf("------Task 2 Resumed!--------\r\n");
+			OS_TaskResume(TASK2_PRIO);
+		}
 		OS_DelayTimes(1000);
 	}
 }
@@ -58,6 +65,12 @@ void task_2()
 	{
 		task2count++;
 		uart1.printf("Task 2 Running!!!,runtimes = %d\r\n",task2count);
+		if(task2count%5 == 0)
+		{
+			uart1.printf("------Task 2 suspend!--------\r\n");
+			OS_TaskSuspend(TASK2_PRIO);
+
+		}
 		OS_DelayTimes(1000);
 	}
 

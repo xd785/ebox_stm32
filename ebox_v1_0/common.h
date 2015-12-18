@@ -18,7 +18,7 @@ This specification is preliminary and is subject to change at any time without n
 extern "C"{
 #endif
 	
-#include "stm32f10x.h"                  // Device header
+#include "core.h"                  // Device header
 
 
 
@@ -40,34 +40,15 @@ extern "C"{
 
 typedef enum
 { 
-    AIN         = 0x0,      //模拟输入
-    INPUT       = 0x04,     //数字输入浮空
-    INPUT_PD    = 0x28,     //数字输入下拉
-    INPUT_PU    = 0x48,     //数字输入上拉
-    OUTPUT_OD   = 0x14,     //数字OD输出/开漏极输出
-    OUTPUT_PP   = 0x10,     //数字推挽输出
-    AF_OD       = 0x1C,     //复用功能OD/与输出寄存器断开，与相应的外设连接
-    AF_PP       = 0x18      //复用功能推挽/与输出寄存器断开，与相应的外设连接
+    AIN         = 0x0,
+    INPUT       = 0x04,
+    INPUT_PD    = 0x28,
+    INPUT_PU    = 0x48,
+    OUTPUT_OD   = 0x14,
+    OUTPUT_PP   = 0x10,
+    AF_OD       = 0x1C,
+    AF_PP       = 0x18
 }PIN_MODE;
-
-//以后NVIC_PriorityGroupConfig()函数不需要再被调用。更不能再以非NVIC_GROUP_CONFIG值填充调用
-#define NVIC_GROUP_CONFIG NVIC_PriorityGroup_2   /*!< 2 bits for pre-emption priority
-												      2 bits for subpriority */
-
-#define interrupts() 		__enable_irq()
-#define no_interrupts() 	__disable_irq()
-	
-///////全局变量、函数///////////////////////////////////////////////
-extern __IO uint32_t millis_seconds;
-
-typedef void (*callback_fun_type)(void);	 
-	 
-void        ebox_init(void);	
-void        ADC1_init(void);
-uint32_t    millis( void ) ;
-void        delay_ms(uint32_t ms);
-void        delay_us(uint16_t us);
-void        delayus(uint32_t us);
 
 class GPIO
 {
@@ -84,6 +65,8 @@ class GPIO
         GPIO_TypeDef* port;
         uint16_t pin;	
 };
+
+void        ADC1_init(void);
 
 uint16_t	analog_read(GPIO *pin);	
 uint16_t	analog_read_voltage(GPIO *pin); 
