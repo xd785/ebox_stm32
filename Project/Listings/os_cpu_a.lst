@@ -284,11 +284,10 @@ ARM Macro Assembler    Page 5
               00000000 
               00000000 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M3 --apcs=interw
-ork --depend=.\objects\os_cpu_a.d -o.\objects\os_cpu_a.o -IF:\百度云同步盘\ebox
-\公开资料\3.源码\工程模板(2015_12_11)\Project\RTE -IC:\Keil_v5\ARM\PACK\Keil\ST
-M32F1xx_DFP\1.1.0\Device\Include -IC:\Keil_v5\ARM\CMSIS\Include --predefine="__
-UVISION_VERSION SETA 515" --predefine="STM32F10X_MD SETA 1" --list=.\listings\o
-s_cpu_a.lst ..\os\os_cpu_a.asm
+ork --depend=.\objects\os_cpu_a.d -o.\objects\os_cpu_a.o -IE:\ebox_stm32\Projec
+t\RTE -IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\1.1.0\Device\Include -IC:\Keil_v
+5\ARM\CMSIS\Include --predefine="__UVISION_VERSION SETA 515" --predefine="STM32
+F10X_MD SETA 1" --list=.\listings\os_cpu_a.lst ..\os\os_cpu_a.asm
 
 
 

@@ -9,6 +9,5 @@
 *.dep
 *.map
 *.lnp
-*.lib
 *.txt
 *.bin
