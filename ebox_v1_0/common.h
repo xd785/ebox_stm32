@@ -40,14 +40,14 @@ extern "C"{
 
 typedef enum
 { 
-    AIN         = 0x0,
-    INPUT       = 0x04,
-    INPUT_PD    = 0x28,
-    INPUT_PU    = 0x48,
-    OUTPUT_OD   = 0x14,
-    OUTPUT_PP   = 0x10,
-    AF_OD       = 0x1C,
-    AF_PP       = 0x18
+    AIN         = 0x0,      //模拟输入
+    INPUT       = 0x04,     //数字输入浮空
+    INPUT_PD    = 0x28,     //数字输入下拉
+    INPUT_PU    = 0x48,     //数字输入上拉
+    OUTPUT_OD   = 0x14,     //数字OD输出/开漏极输出
+    OUTPUT_PP   = 0x10,     //数字推挽输出
+    AF_OD       = 0x1C,     //复用功能OD/与输出寄存器断开，与相应的外设连接
+    AF_PP       = 0x18      //复用功能推挽/与输出寄存器断开，与相应的外设连接
 }PIN_MODE;
 
 //以后NVIC_PriorityGroupConfig()函数不需要再被调用。更不能再以非NVIC_GROUP_CONFIG值填充调用
