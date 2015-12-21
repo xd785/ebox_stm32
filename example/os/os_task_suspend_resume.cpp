@@ -6,17 +6,15 @@
 #define TASK_1_STK_SIZE 128
 #define TASK_2_STK_SIZE 128
 #define TASK_3_STK_SIZE 128
-#define TASK_4_STK_SIZE 128
 
 static STACK_TypeDef TASK_1_STK[TASK_1_STK_SIZE];
 static STACK_TypeDef TASK_2_STK[TASK_2_STK_SIZE];
 static STACK_TypeDef TASK_3_STK[TASK_3_STK_SIZE];
-static STACK_TypeDef TASK_4_STK[TASK_4_STK_SIZE];
 
 #define TASK1_PRIO 0
 #define TASK2_PRIO 1
 #define TASK3_PRIO 2
-#define TASK4_PRIO 3
+
 void task_1();
 void task_2();
 void task_3();
@@ -29,20 +27,20 @@ u8 task2count = 0;
 
 void setup()
 {
-	eBoxInit();
-	OS_Init();
+	ebox_init();
+	os_init();
 	
 	uart1.begin(9600);
 	uart1.printf("\r\nuart1 9600 ok!");
 	
 		uart1.printf("\r\nos初始化!");
 
-	OS_TaskCreate(task_1,&TASK_1_STK[TASK_1_STK_SIZE-1],TASK1_PRIO);
-	OS_TaskCreate(task_2,&TASK_2_STK[TASK_2_STK_SIZE-1],TASK2_PRIO);
-	OS_TaskCreate(task_3,&TASK_3_STK[TASK_3_STK_SIZE-1],TASK3_PRIO);
+	os_task_create(task_1,&TASK_1_STK[TASK_1_STK_SIZE-1],TASK1_PRIO);
+	os_task_create(task_2,&TASK_2_STK[TASK_2_STK_SIZE-1],TASK2_PRIO);
+	os_task_create(task_3,&TASK_3_STK[TASK_3_STK_SIZE-1],TASK3_PRIO);
 	uart1.printf("\r\nos创建任务成功");
 
-	OS_Start();
+	os_start();
 
 }
 void task_1()
@@ -54,9 +52,9 @@ void task_1()
 		if(task1count % 10 == 0)
 		{
 			uart1.printf("------Task 2 Resumed!--------\r\n");
-			OS_TaskResume(TASK2_PRIO);
+			os_task_resume(TASK2_PRIO);
 		}
-		OS_DelayTimes(1000);
+		os_time_delay(1000);
 	}
 }
 void task_2()
@@ -68,10 +66,10 @@ void task_2()
 		if(task2count%5 == 0)
 		{
 			uart1.printf("------Task 2 suspend!--------\r\n");
-			OS_TaskSuspend(TASK2_PRIO);
+			os_task_suspend(TASK2_PRIO);
 
 		}
-		OS_DelayTimes(1000);
+		os_time_delay(1000);
 	}
 
 }
@@ -80,11 +78,7 @@ void task_3()
   while(1)
 	{
 		uart1.printf("Task 3 Running!!!\r\n");
-		cpu = OS_GetCPU();
-		mem = OS_GetStackMaxUsage(TASK_3_STK,TASK_3_STK_SIZE);
-		uart1.printf("cpu = %0.1f%%\r\n",cpu);
-		uart1.printf("task3：mem = %02d%%\r\n",mem);
-		OS_DelayTimes(1000);
+		os_time_delay(1000);
 	}
 
 }
